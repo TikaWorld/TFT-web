@@ -53,13 +53,9 @@ export class Field extends React.Component {
       position: "absolute",
       width:"700px",
       height:"1000px",
-      top: "70%",
-      left: "50%",
-      transform: "translate(-50%, -50%)"
     };
     const getCellRow = (i) => {
       const isOdd = i%2
-      console.log(isOdd, i)
       let style = {paddingTop: "25px", width:"700px", height:"50px"}
       if (isOdd){
         style = {paddingTop: "25px", paddingLeft: "50px", width:"700px", height:"50px"}
