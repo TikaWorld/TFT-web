@@ -1,14 +1,20 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { loadChampions } from 'redux/modules/champion';
+import { updateChampions } from 'redux/modules/champion';
 import Champion from 'component/champion'
 
 
 function ChampionContainer() {
     const dispatch = useDispatch();
-    const data = dispatch(loadChampions());
-    console.log(data)
+    //const data = dispatch(updateChampions({"a":{x: 0, y: 0}}));
+    const championData = useSelector(state => state.champion);
+    console.log(championData)
+    const move = (id, x, y) => {
+        const r = {}
+        r[id]={x: x, y: y}
+        dispatch(updateChampions(r));
+      };
     return (
-      <Champion/>
+      <Champion data={championData} move={move}/>
     );
 }
 

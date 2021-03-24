@@ -19,6 +19,7 @@ const Hexa = styled.div`
       border-left: 50px solid transparent;
       border-right: 50px solid transparent;
       border-bottom: 25px solid black;
+      
     }
   &::after {
       content: "";
@@ -34,18 +35,29 @@ const Hexa = styled.div`
 `
 
 const getStyle = (x, y) => ({
-    transform: `translate3d(${x}px, ${y}px, 0)  rotate(${0}deg)`,
+    transform: `translate3d(${x}px, ${y+25}px, 0)  rotate(${0}deg)`,
     position: "absolute",
   });
 
 export default class Champion extends React.Component {
   constructor(props){
     super(props);
+    this.id = "1"
   }
   render(){
+    let data = this.props.data
+    const id = this.id
+    const move = this.props.move
+    if (!(data.hasOwnProperty(this.id))){
+      data[id] = {x:0,y:0}
+    }
+    console.log(data)
     return(
-      <Motion defaultStyle={{x: 0, y: 0}} style={{x: spring(100), y: spring(100)}}>
-        {({x, y}) => <div style={getStyle(x, y)}> <Hexa/></div>}
+      <Motion defaultStyle={{x: 0, y: 0}} style={{x: spring(data[id].x), y: spring(data[id].y)}}>
+        {({x, y}) => 
+        <div style={getStyle(x, y)}> 
+          <Hexa onClick={()=> move(id, data[id].x+100, data[id].y+75)}/>
+        </div>}
       </Motion>
     )
   }  

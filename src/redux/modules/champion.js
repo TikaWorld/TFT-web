@@ -4,10 +4,14 @@ const CREATE = 'my-app/widgets/CREATE';
 const UPDATE = 'my-app/widgets/UPDATE';
 const REMOVE = 'my-app/widgets/REMOVE';
 
+const initialState = {};
 // Reducer
-export default function reducer(state = {}, action = {}) {
+export default function reducer(state = initialState, action = {}) {
+  console.log(action);
+  
   switch (action.type) {
     // do reducer stuff
+    case UPDATE: return { ...state, ...action.champion };
     default: return state;
   }
 }
@@ -17,14 +21,14 @@ export function loadChampions() {
   return { type: LOAD };
 }
 
-export function createChampionst(widget) {
-  return { type: CREATE, widget };
+export function createChampions(champion) {
+  return { type: CREATE, champion };
 }
 
-export function updateChampions(widget) {
-  return { type: UPDATE, widget };
+export function updateChampions(champion) {
+  return { type: UPDATE, champion };
 }
 
-export function removeChampions(widget) {
-  return { type: REMOVE, widget };
+export function removeChampions(champion) {
+  return { type: REMOVE, champion };
 }
