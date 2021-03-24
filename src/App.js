@@ -11,7 +11,6 @@ function App() {
   return (
     <div>
       <Field/>
-      <Champion/>
     </div>
   );
 }

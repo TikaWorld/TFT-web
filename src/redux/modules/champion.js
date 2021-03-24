@@ -7,8 +7,6 @@ const REMOVE = 'my-app/widgets/REMOVE';
 const initialState = {};
 // Reducer
 export default function reducer(state = initialState, action = {}) {
-  console.log(action);
-  
   switch (action.type) {
     // do reducer stuff
     case UPDATE: return { ...state, ...action.champion };
