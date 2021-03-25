@@ -2,7 +2,8 @@ import * as React from 'react';
 import styled from 'styled-components'
 import Champion from 'container/champion.js'
 import { updateChampions } from 'redux/modules/champion';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import mockData from 'MOCK_DATA'
 
 const Hexa = styled.div` 
   display: inline-block;
@@ -47,35 +48,38 @@ class Cell extends React.Component {
   }  
 }
 
-const mock_champion_data = [{"name": "a", "uuid": "11a4af6c-1783-4771-990f-1ec543c0752b", "id": "TFT4_Yasuo", "level": 3, "team": "2884440678480", "traits": ["Set4_Exile", "Duelist"], "skill": "striking_steel", "state": [], "hp": 1782, "mp": 0, "stat": {"max_hp": 1782, "max_mp": 45, "mp": 0, "heist": 825.0, "attack_damage": 162, "spell_power": 100, "critical_strike_chance": 25, "critical_strike_damage": 150, "range": 1, "armor": 30, "magic_resistance": 20, "attack_speed": 0.7, "dodge_chance": 0, "damage_reduce": 0, "damage_increase": 0}, "barrier": 891.0},
-  {"name": "a", "uuid": "2", "id": "TFT4_Yasuo", "level": 3, "team": "2884440678480", "traits": ["Set4_Exile", "Duelist"], "skill": "striking_steel", "state": [], "hp": 1782, "mp": 0, "stat": {"max_hp": 1782, "max_mp": 45, "mp": 0, "heist": 825.0, "attack_damage": 162, "spell_power": 100, "critical_strike_chance": 25, "critical_strike_damage": 150, "range": 1, "armor": 30, "magic_resistance": 20, "attack_speed": 0.7, "dodge_chance": 0, "damage_reduce": 0, "damage_increase": 0}, "barrier": 891.0}]
+const mock_champion_data = mockData.field;
 
+const style ={
+  position: "absolute",
+  width:"700px",
+  height:"1000px",
+};
 export function Field() {
   const dispatch = useDispatch();
-  const style ={
-    position: "absolute",
-    width:"700px",
-    height:"1000px",
-  };
+  const cell = {};
+      
   const getCellRow = (i) => {
     const isOdd = i%2
     let style = {paddingTop: "25px", width:"700px", height:"50px"}
     if (isOdd){style = {paddingTop: "25px", paddingLeft: "50px", width:"700px", height:"50px"}}
-    return <div style={style} key={i}>{[1,2,3,4,5,6,7].map((j) => {return (<Cell id={j+i*7} key={j+i*7}/>);})}</div>
+    return <div style={style} key={i}>{[1,2,3,4,5,6,7].map((j) => {
+      const index = j+i*7;
+      cell[index-1] = {x:j-1, y:i};
+      return (<Cell id={index} key={index}/>);
+      })}</div>
   }
-  let x = 0;
-  const createChampion = (data) => {
+  const createChampion = (c, data) => {
     const r = {};
-    r[data["uuid"]]={x: x, y: 0};
-    x = x+1;
+    r[data["uuid"]]={pos: cell[c], data: data};
     dispatch(updateChampions(r));
     return <Champion key={data["uuid"]} id={data["uuid"]}/>
   };
-    
+  
   return(
     <div>
       <div style ={style}>{[0,1,2,3,4,5,6,7].map((i) => {return (getCellRow(i));})}</div>
-      {mock_champion_data.map((data) => {return createChampion(data)})}   
+      {Object.keys(mock_champion_data).map((key) => {return createChampion(key, mock_champion_data[key])})}   
     </div>
   )
   

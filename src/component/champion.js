@@ -57,16 +57,16 @@ export default class Champion extends React.Component {
     const id = this.id
     const move = this.props.move
     
-    if (!(data.hasOwnProperty(this.id))){
+    if (!(data.hasOwnProperty("pos"))){
       console.log(data)
-      data[id] = {x:0,y:0}
+      data.pos = {x:0,y:0}
     }
-    const pos = posConvert(data[id].x, data[id].y)
+    const pos = posConvert(data.pos.x, data.pos.y)
     return(
       <Motion defaultStyle={{x: pos.x, y: pos.y}} style={{x: spring(pos.x), y: spring(pos.y)}}>
         {({x, y}) => 
         <div style={getStyle(x, y)}> 
-          <Hexa onClick={()=> move(id, data[id].x, data[id].y+1)}/>
+          <Hexa onClick={()=> move(id, data.pos.x, data.pos.y+1)}/>
         </div>}
       </Motion>
     )

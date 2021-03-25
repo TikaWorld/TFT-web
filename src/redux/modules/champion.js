@@ -1,11 +1,10 @@
-// Actions
-const LOAD   = 'my-app/widgets/LOAD';
-const CREATE = 'my-app/widgets/CREATE';
-const UPDATE = 'my-app/widgets/UPDATE';
-const REMOVE = 'my-app/widgets/REMOVE';
+const LOAD   = 'my-app/champions/LOAD';
+const CREATE = 'my-app/champions/CREATE';
+const UPDATE = 'my-app/champions/UPDATE';
+const REMOVE = 'my-app/champions/REMOVE';
 
 const initialState = {};
-// Reducer
+
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
     // do reducer stuff
@@ -14,7 +13,6 @@ export default function reducer(state = initialState, action = {}) {
   }
 }
 
-// Action 생성자
 export function loadChampions() {
   return { type: LOAD };
 }

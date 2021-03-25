@@ -2,7 +2,7 @@ import * as React from 'react';
 import './App.css';
 
 import {Field} from './component/field.js'
-import Champion from './container/champion.js'
+import Timeline from './component/timeline.js'
 
 function App() {
   const canvasRef = React.useRef(null);
@@ -11,6 +11,7 @@ function App() {
   return (
     <div>
       <Field/>
+      <Timeline/>
     </div>
   );
 }
