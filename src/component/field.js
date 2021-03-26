@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components'
 import Champion from 'container/champion.js'
-import { updateChampions } from 'redux/modules/champion';
+import { createChampions } from 'redux/modules/champion';
 import { useDispatch } from 'react-redux';
 import mockData from 'MOCK_DATA'
 
@@ -61,8 +61,8 @@ export function Field() {
       
   const getCellRow = (i) => {
     const isOdd = i%2
-    let style = {paddingTop: "25px", width:"700px", height:"50px"}
-    if (isOdd){style = {paddingTop: "25px", paddingLeft: "50px", width:"700px", height:"50px"}}
+    let style = {paddingTop: "25px", width:"700px", height:"55px"}
+    if (isOdd){style = {paddingTop: "25px", paddingLeft: "50px", width:"700px", height:"55px"}}
     return <div style={style} key={i}>{[1,2,3,4,5,6,7].map((j) => {
       const index = j+i*7;
       cell[index-1] = {x:j-1, y:i};
@@ -72,7 +72,7 @@ export function Field() {
   const createChampion = (c, data) => {
     const r = {};
     r[data["uuid"]]={pos: cell[c], data: data};
-    dispatch(updateChampions(r));
+    dispatch(createChampions(r));
     return <Champion key={data["uuid"]} id={data["uuid"]}/>
   };
   

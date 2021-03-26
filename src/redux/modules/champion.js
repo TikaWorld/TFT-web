@@ -1,14 +1,24 @@
-const LOAD   = 'my-app/champions/LOAD';
-const CREATE = 'my-app/champions/CREATE';
-const UPDATE = 'my-app/champions/UPDATE';
-const REMOVE = 'my-app/champions/REMOVE';
+const LOAD   = 'champions/LOAD';
+const CREATE = 'champions/CREATE';
+const UPDATE_POS = 'champions/UPDATE/POS';
+const UPDATE_DATA = 'champions/UPDATE/DATA';
+const REMOVE = 'champions/REMOVE';
 
 const initialState = {};
 
 export default function reducer(state = initialState, action = {}) {
+  const champion = action.champion
+  
   switch (action.type) {
     // do reducer stuff
-    case UPDATE: return { ...state, ...action.champion };
+    case CREATE: return { ...state, ...action.champion };
+    case UPDATE_DATA: 
+      state[champion.id].data = champion.data;
+      return { ...state };
+    case UPDATE_POS:
+      state[champion.id].pos = champion.pos;
+      return { ...state };
+    
     default: return state;
   }
 }
@@ -21,8 +31,12 @@ export function createChampions(champion) {
   return { type: CREATE, champion };
 }
 
-export function updateChampions(champion) {
-  return { type: UPDATE, champion };
+export function updateChampionPos(champion) {
+  return { type: UPDATE_POS, champion };
+}
+
+export function updateChampionData(champion) {
+  return { type: UPDATE_DATA, champion };
 }
 
 export function removeChampions(champion) {

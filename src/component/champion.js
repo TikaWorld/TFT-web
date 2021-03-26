@@ -7,7 +7,7 @@ const Hexa = styled.div`
   width: 100px;
   height: 55px;
   background: black;
-  position: relative;
+  position: absolute;
   
   &::before {
       content: "";
@@ -34,8 +34,15 @@ const Hexa = styled.div`
   }
 `
 
+const Stat = styled.div` 
+  width: 100px;
+  height: 10px;
+  background: white;
+  font-size: 10px;
+`
+
 function posConvert(x, y) {
-  const convert = {x:x*100, y:y*75};
+  const convert = {x:x*100, y:y*80};
   if (y%2===1){
     convert.x = convert.x+50;
   }
@@ -53,20 +60,18 @@ export default class Champion extends React.Component {
     this.id = props.uuid
   }
   render(){
-    let data = this.props.data
+    let champion = this.props.data
     const id = this.id
     const move = this.props.move
     
-    if (!(data.hasOwnProperty("pos"))){
-      console.log(data)
-      data.pos = {x:0,y:0}
-    }
-    const pos = posConvert(data.pos.x, data.pos.y)
+    const pos = posConvert(champion.pos.x, champion.pos.y)
     return(
       <Motion defaultStyle={{x: pos.x, y: pos.y}} style={{x: spring(pos.x), y: spring(pos.y)}}>
         {({x, y}) => 
         <div style={getStyle(x, y)}> 
-          <Hexa onClick={()=> move(id, data.pos.x, data.pos.y+1)}/>
+          <Hexa onClick={()=> move(id, champion.pos.x, champion.pos.y+1)}>
+            <Stat>{champion.data.hp}</Stat>
+          </Hexa>
         </div>}
       </Motion>
     )
