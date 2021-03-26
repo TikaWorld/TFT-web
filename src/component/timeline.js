@@ -26,11 +26,25 @@ function TimeItem(props) {
 }
 
 export default function BasicTimeline() {
-  const timeline = useSelector(state => state.timeline);
+  const dispatch = useDispatch();
+  const champions = useSelector(state => state.champion);
+    const timeline = useSelector(state => state.timeline);
   let i = 0;
+  const play = () => {
+    for (let log in timeline){
+      setTimeout(()=>{actionChampion(dispatch, timeline[log], champions)}, Number(timeline[log].time)*1000);
+    }
+  }
   return (
     <div style={{position: "absolute", right: 0, width: "268px"}}>
     <Timeline align="right">
+      <TimelineItem>
+        <TimelineSeparator>
+          <TimelineDot onClick={()=>play()}/>  
+          <TimelineConnector />
+        </TimelineSeparator>
+        <TimelineContent>Play</TimelineContent>
+      </TimelineItem>
       {timeline.map((log)=>{return <TimeItem key={i++} log={log}/>})}
       <TimelineItem>
         <TimelineSeparator>

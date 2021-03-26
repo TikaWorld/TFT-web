@@ -20,7 +20,6 @@ function moveChampion(dispatch, id, championData, pos){
   const r = {};
   r[id] = {};
   r[id].data = championData;
-  r[id].pos = {x:pos%7 ,y: Math.trunc(pos%7)};
-  
+  r[id].pos = {x:pos%7 ,y: Math.trunc(pos/7)};
   dispatch(updateChampions(r));
 }
