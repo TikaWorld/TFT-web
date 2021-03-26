@@ -6,18 +6,17 @@ import TimelineConnector from '@material-ui/lab/TimelineConnector';
 import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
 import { useSelector, useDispatch } from 'react-redux';
-import { moveChampion } from 'action/champion'
+import { actionChampion } from 'action/champion'
 
 function TimeItem(props) {
   const dispatch = useDispatch();
-  const id = props.log.champion.uuid
-  const data = useSelector(state => state.champion[id]);
-  const action = props.log.action
+  const data = useSelector(state => state.champion);
+  const action = props.log.action;
   
   return (
       <TimelineItem>
         <TimelineSeparator>
-          <TimelineDot onClick={()=>moveChampion(dispatch, id, data, {x:0,y:0})}/>
+          <TimelineDot onClick={()=>actionChampion(dispatch, props.log, data)}/>
           <TimelineConnector />
         </TimelineSeparator>
         <TimelineContent>{action}</TimelineContent>
