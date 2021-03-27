@@ -10,13 +10,12 @@ import { actionChampion } from 'action/champion'
 
 function TimeItem(props) {
   const dispatch = useDispatch();
-  const data = useSelector(state => state.champion);
   const action = props.log.action;
   
   return (
       <TimelineItem>
         <TimelineSeparator>
-          <TimelineDot onClick={()=>actionChampion(dispatch, props.log, data)}/>
+          <TimelineDot onClick={()=>actionChampion(dispatch, props.log)}/>
           <TimelineConnector />
         </TimelineSeparator>
         <TimelineContent>{action}</TimelineContent>

@@ -71,7 +71,7 @@ export function Field() {
   }
   const createChampion = (c, data) => {
     const r = {};
-    r[data["uuid"]]={pos: cell[c], data: data};
+    r[data["uuid"]]={pos: cell[c], data: data, alive: true};
     dispatch(createChampions(r));
     return <Champion key={data["uuid"]} id={data["uuid"]}/>
   };
@@ -82,5 +82,4 @@ export function Field() {
       {Object.keys(mock_champion_data).map((key) => {return createChampion(key, mock_champion_data[key])})}   
     </div>
   )
-  
 }

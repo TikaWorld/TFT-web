@@ -2,6 +2,7 @@ const LOAD   = 'champions/LOAD';
 const CREATE = 'champions/CREATE';
 const UPDATE_POS = 'champions/UPDATE/POS';
 const UPDATE_DATA = 'champions/UPDATE/DATA';
+const UPDATE_ALIVE = 'champions/UPDATE/ALIVE';
 const REMOVE = 'champions/REMOVE';
 
 const initialState = {};
@@ -18,7 +19,9 @@ export default function reducer(state = initialState, action = {}) {
     case UPDATE_POS:
       state[champion.id].pos = champion.pos;
       return { ...state };
-    
+    case UPDATE_ALIVE:
+      state[champion.id].alive = champion.alive;
+      return { ...state };
     default: return state;
   }
 }
@@ -37,6 +40,10 @@ export function updateChampionPos(champion) {
 
 export function updateChampionData(champion) {
   return { type: UPDATE_DATA, champion };
+}
+
+export function updateChampionAlive(champion) {
+  return { type: UPDATE_ALIVE, champion };
 }
 
 export function removeChampions(champion) {

@@ -1,12 +1,14 @@
 import * as React from 'react';
 import { Motion, spring } from "react-motion";
 import styled from 'styled-components'
-
+import Stat from 'component/stat'
 const Hexa = styled.div` 
   display: inline-block;
   width: 100px;
   height: 55px;
   background: black;
+  opacity: 1;
+  transition: opacity 300ms;
   position: absolute;
   
   &::before {
@@ -34,13 +36,6 @@ const Hexa = styled.div`
   }
 `
 
-const Stat = styled.div` 
-  width: 100px;
-  height: 10px;
-  background: white;
-  font-size: 10px;
-`
-
 function posConvert(x, y) {
   const convert = {x:x*100, y:y*80};
   if (y%2===1){
@@ -57,21 +52,17 @@ const getStyle = (x, y) => ({
 export default class Champion extends React.Component {
   constructor(props){
     super(props);
-    this.id = props.uuid
+    this.id = props.uuid;
   }
   render(){
-    let champion = this.props.data
-    const id = this.id
-    const move = this.props.move
-    
-    const pos = posConvert(champion.pos.x, champion.pos.y)
+    const champion = this.props.data;
+    const pos = posConvert(champion.pos.x, champion.pos.y);
+    const alive = Number(this.props.alive);
     return(
       <Motion defaultStyle={{x: pos.x, y: pos.y}} style={{x: spring(pos.x), y: spring(pos.y)}}>
         {({x, y}) => 
-        <div style={getStyle(x, y)}> 
-          <Hexa onClick={()=> move(id, champion.pos.x, champion.pos.y+1)}>
-            <Stat>{champion.data.hp}</Stat>
-          </Hexa>
+        <div style={getStyle(x, y)}>
+          <Hexa style={{opacity: alive}}><Stat data={champion.data}/></Hexa>
         </div>}
       </Motion>
     )

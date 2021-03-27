@@ -1,21 +1,14 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { updateChampionPos } from 'redux/modules/champion';
+import { useSelector } from 'react-redux';
 import Champion from 'component/champion'
+import React from 'react';
 
 
 function ChampionContainer(props) {
-    const dispatch = useDispatch();
     const championData = useSelector(state => state.champion);
-    const move = (id, x, y) => {
-        const r = {};
-        r.data = championData[id];
-        r.pos = {x: x, y: y};
-        r.id = id
-        dispatch(updateChampionPos(r));
-      };
+    
     return (
-      <Champion uuid={props.id} data={championData[props.id]} move={move}/>
+      <Champion uuid={props.id} data={championData[props.id]} alive={championData[props.id].alive}/>
     );
 }
 
-export default ChampionContainer
+export default React.memo(ChampionContainer)
