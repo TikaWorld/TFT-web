@@ -2,42 +2,19 @@ import * as React from 'react';
 import { Motion, spring } from "react-motion";
 import styled from 'styled-components'
 import Stat from 'component/stat'
-const Hexa = styled.div` 
+
+const Cont = styled.div` 
   display: inline-block;
   width: 100px;
-  height: 55px;
-  background: black;
+  height: 119.09px;
   opacity: 1;
   transition: opacity 300ms;
   position: absolute;
-  
-  &::before {
-      content: "";
-      position: absolute;
-      top: -25px;
-      left: 0;
-      width: 0;
-      height: 0;
-      border-left: 50px solid transparent;
-      border-right: 50px solid transparent;
-      border-bottom: 25px solid black;
-      
-    }
-  &::after {
-      content: "";
-      position: absolute;
-      bottom: -25px;
-      left: 0;
-      width: 0;
-      height: 0;
-      border-left: 50px solid transparent;
-      border-right: 50px solid transparent;
-      border-top: 25px solid black;
-  }
+  top: -25px;
 `
 
 function posConvert(x, y) {
-  const convert = {x:x*100, y:y*80};
+  const convert = {x:x*100, y:y*86.5};
   if (y%2===1){
     convert.x = convert.x+50;
   }
@@ -62,7 +39,7 @@ export default class Champion extends React.Component {
       <Motion defaultStyle={{x: pos.x, y: pos.y}} style={{x: spring(pos.x), y: spring(pos.y)}}>
         {({x, y}) => 
         <div style={getStyle(x, y)}>
-          <Hexa style={{opacity: alive}}><Stat data={champion.data}/></Hexa>
+          <Cont style={{opacity: alive}}><Stat data={champion.data}/></Cont>
         </div>}
       </Motion>
     )

@@ -4,36 +4,12 @@ import Champion from 'container/champion.js'
 import { createChampions } from 'redux/modules/champion';
 import { useDispatch } from 'react-redux';
 import mockData from 'MOCK_DATA'
+import Hexagon from 'react-hexagon'
 
-const Hexa = styled.div` 
-  display: inline-block;
+const HexCont = styled.div` 
   width: 100px;
-  height: 55px;
-  background: pink;
-  position: relative;
-  
-  &::before {
-      content: "";
-      position: absolute;
-      top: -25px;
-      left: 0;
-      width: 0;
-      height: 0;
-      border-left: 50px solid transparent;
-      border-right: 50px solid transparent;
-      border-bottom: 25px solid pink;
-    }
-  &::after {
-      content: "";
-      position: absolute;
-      bottom: -25px;
-      left: 0;
-      width: 0;
-      height: 0;
-      border-left: 50px solid transparent;
-      border-right: 50px solid transparent;
-      border-top: 25px solid pink;
-  }
+  height: 115.09px;
+  display: inline-block;
 `
 
 class Cell extends React.Component {
@@ -42,8 +18,9 @@ class Cell extends React.Component {
   }
   render(){
     return(
-        <Hexa>
-       </Hexa>
+      <HexCont>
+        <Hexagon style={{fill: 'pink', stroke: 'none'}}/>
+      </HexCont>
     )
   }  
 }
@@ -61,8 +38,8 @@ export function Field() {
       
   const getCellRow = (i) => {
     const isOdd = i%2
-    let style = {paddingTop: "25px", width:"700px", height:"55px"}
-    if (isOdd){style = {paddingTop: "25px", paddingLeft: "50px", width:"700px", height:"55px"}}
+    let style = {width:"700px", height:"86.5px"}
+    if (isOdd){style = {paddingLeft: "50px", width:"700px", height:"86.5px"}}
     return <div style={style} key={i}>{[1,2,3,4,5,6,7].map((j) => {
       const index = j+i*7;
       cell[index-1] = {x:j-1, y:i};
