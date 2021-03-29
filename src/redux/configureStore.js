@@ -3,6 +3,7 @@ import thunk from "redux-thunk";
 import { routerReducer, routerMiddleware } from "react-router-redux";
 import champion from "./modules/champion";
 import timeline from "./modules/timeline";
+import field from "./modules/field";
 import { createBrowserHistory } from "history";
 import  { composeWithDevTools } from "redux-devtools-extension";
 import logger from 'redux-logger';
@@ -18,6 +19,7 @@ if(env === 'development') {
 }
 
 const reducer = combineReducers({
+  field,
   timeline,
   champion,
   routing: routerReducer,

@@ -2,9 +2,12 @@ import * as React from 'react';
 import styled from 'styled-components'
 import Champion from 'container/champion.js'
 import { createChampions } from 'redux/modules/champion';
+import { updateFieldChampion } from 'redux/modules/field';
 import { useDispatch } from 'react-redux';
 import mockData from 'MOCK_DATA'
 import Hexagon from 'react-hexagon'
+import { useDrop } from 'react-dnd'
+import { ItemTypes } from 'itemType'
 
 const HexCont = styled.div` 
   width: 100px;
@@ -16,18 +19,23 @@ const FieldCont = styled.div`
   height: 750px;
 `
 
-class Cell extends React.Component {
-  constructor(props){
-    super(props);
-  }
-  render(){
-    return(
-      <HexCont>
-        <Hexagon style={{fill: '#222222', stroke: '#111111', strokeWidth: 20}}/>
-      </HexCont>
-    )
-  }  
-}
+function Cell(props) {
+  const dispatch = useDispatch();
+  const [, drop] = useDrop(
+    () => ({
+      accept: ItemTypes.CHAMPION,
+      drop: (item) => {dispatch(updateFieldChampion(item)); console.log(item)},
+      collect: (monitor) => ({
+        isOver: !!monitor.isOver(),
+      })
+    }))
+  return(
+    <HexCont ref={drop} >
+      <Hexagon style={{fill: '#222222', stroke: '#111111', strokeWidth: 20}}/>
+    </HexCont>
+  )
+}  
+
 
 const mock_champion_data = {};
 

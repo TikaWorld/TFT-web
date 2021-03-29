@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components'
 import championsData from 'data/champions'
+import { useDrag } from 'react-dnd'
+import { ItemTypes } from 'itemType'
 
 const Cont = styled.div` 
   width: 100%;
@@ -19,11 +21,11 @@ const PaletteCont = styled.div`
 `
 
 const ChampionListCont = styled.div` 
-  margin: 8px;
+  margin: 10px;
 `
 
 const ChampionCont = styled.div`
-  margin: 2px;
+  margin: 0 2px;
   display: inline-block;
   width: 50px;
   height: 50px;
@@ -95,8 +97,15 @@ export default function Palette(props){
 function Champion(props){
   const costColor = ['', '#7c7c7c', '#11b288', '#207ac6', '#c13fd7', '#feb83f'];
   const data = props.data
+  const [{ isDragging }, drag] = useDrag(() => ({
+    type: ItemTypes.CHAMPION,
+    item: {id: data.championId},
+    collect: (monitor) => ({
+      isDragging: !!monitor.isDragging()
+    })
+  }))
   return(
-    <ChampionCont style={{border: '3px solid '+costColor[data.cost]}}>
+    <ChampionCont ref={drag} style={{border: '3px solid '+costColor[data.cost]}}>
       <div style={{position:'relative'}}>
         <ChampionImg src={"/champions/"+data.championId+".png"}/>
         <ChampionPrice style={{background: costColor[data.cost]}}>{'$'+data.cost}</ChampionPrice>
