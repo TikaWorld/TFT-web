@@ -1,0 +1,4 @@
+[submodule "api_server/libraries/Simulatorapp"]
+	path = api_server/libraries/Simulatorapp
+	url = https://github.com/TikaWorld/TFT-simulator.git
+	branch = master
