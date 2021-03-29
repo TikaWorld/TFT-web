@@ -19,8 +19,6 @@ const Mp = styled(Bar)`
   background: blue;
 `
 const HexCont = styled.div`
-  width: 100px;
-  height: 150px;
   position: relative;
 `
 

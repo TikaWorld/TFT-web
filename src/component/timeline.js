@@ -7,6 +7,14 @@ import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
 import { useSelector, useDispatch } from 'react-redux';
 import { actionChampion } from 'action/champion'
+import styled from 'styled-components'
+
+const Cont = styled.div`
+  position: absolute;
+  right: 0;
+  top: 0;
+  color: #d6d6d6;
+`
 
 function TimeItem(props) {
   const dispatch = useDispatch();
@@ -35,7 +43,7 @@ export default function BasicTimeline() {
     }
   }
   return (
-    <div style={{position: "absolute", right: 0, width: "268px"}}>
+    <Cont>
     <Timeline align="right">
       <TimelineItem>
         <TimelineSeparator>
@@ -52,6 +60,6 @@ export default function BasicTimeline() {
         <TimelineContent>End</TimelineContent>
       </TimelineItem>
     </Timeline>
-    </div>
+    </Cont>
   );
 }

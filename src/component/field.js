@@ -12,6 +12,10 @@ const HexCont = styled.div`
   display: inline-block;
 `
 
+const FieldCont = styled.div`
+  height: 750px;
+`
+
 class Cell extends React.Component {
   constructor(props){
     super(props);
@@ -19,20 +23,20 @@ class Cell extends React.Component {
   render(){
     return(
       <HexCont>
-        <Hexagon style={{fill: 'pink', stroke: 'none'}}/>
+        <Hexagon style={{fill: '#222222', stroke: '#111111', strokeWidth: 20}}/>
       </HexCont>
     )
   }  
 }
 
-const mock_champion_data = mockData.field;
+const mock_champion_data = {};
 
 const style ={
-  position: "absolute",
+  position: 'absolute',
   width:"700px",
-  height:"1000px",
+  height:"750px",
 };
-export function Field() {
+export default function Field() {
   const dispatch = useDispatch();
   const cell = {};
       
@@ -54,9 +58,9 @@ export function Field() {
   };
   
   return(
-    <div>
+    <FieldCont>
       <div style ={style}>{[0,1,2,3,4,5,6,7].map((i) => {return (getCellRow(i));})}</div>
       {Object.keys(mock_champion_data).map((key) => {return createChampion(key, mock_champion_data[key])})}   
-    </div>
+    </FieldCont>
   )
 }

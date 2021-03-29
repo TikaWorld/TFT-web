@@ -6,7 +6,7 @@ const CREATE = 'my-app/timeline/CREATE';
 const UPDATE = 'my-app/timeline/UPDATE';
 const REMOVE = 'my-app/timeline/REMOVE';
 
-const initialState = mockData.log;
+const initialState = [];
 
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
