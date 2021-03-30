@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import * as React from 'react';
 import { Motion, spring } from "react-motion";
 import styled from 'styled-components'
@@ -27,9 +28,9 @@ const getStyle = (x, y) => ({
   });
 
 export default class Champion extends React.Component {
-  constructor(props){
-    super(props);
-    this.id = props.uuid;
+  constructor(uuid){
+    super(uuid);
+    this.id = uuid;
   }
   render(){
     const champion = this.props.data;

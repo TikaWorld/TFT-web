@@ -1,10 +1,10 @@
 import mockData from 'MOCK_DATA'
 
 
-const LOAD   = 'my-app/timeline/LOAD';
-const CREATE = 'my-app/timeline/CREATE';
-const UPDATE = 'my-app/timeline/UPDATE';
-const REMOVE = 'my-app/timeline/REMOVE';
+const LOAD   = 'timeline/LOAD';
+const CREATE = 'timeline/CREATE';
+const UPDATE = 'timeline/UPDATE';
+const REMOVE = 'timeline/REMOVE';
 
 const initialState = [];
 

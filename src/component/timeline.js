@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import Timeline from '@material-ui/lab/Timeline';
 import TimelineItem from '@material-ui/lab/TimelineItem';
@@ -35,7 +36,7 @@ function TimeItem(props) {
 export default function BasicTimeline() {
   const dispatch = useDispatch();
   const champions = useSelector(state => state.champion);
-    const timeline = useSelector(state => state.timeline);
+  const timeline = useSelector(state => state.timeline);
   let i = 0;
   const play = () => {
     for (let log in timeline){
@@ -52,7 +53,7 @@ export default function BasicTimeline() {
         </TimelineSeparator>
         <TimelineContent>Play</TimelineContent>
       </TimelineItem>
-      {timeline.map((log)=>{return <TimeItem key={i++} log={log}/>})}
+      {timeline.map(log=>{return <TimeItem key={i++} log={log}/>})}
       <TimelineItem>
         <TimelineSeparator>
           <TimelineDot />

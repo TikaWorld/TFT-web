@@ -1,9 +1,10 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components'
 import Champion from 'container/champion.js'
 import { createChampions } from 'redux/modules/champion';
 import { updateFieldChampion } from 'redux/modules/field';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { postField } from 'api/field'
 import mockData from 'MOCK_DATA'
 import Hexagon from 'react-hexagon'
 import { useDrop } from 'react-dnd'
@@ -20,12 +21,21 @@ const FieldCont = styled.div`
 `
 
 function Cell(props) {
+  const item = props.item
   const dispatch = useDispatch();
   const [, drop] = useDrop(
     () => ({
       accept: ItemTypes.CHAMPION,
-      drop: (item) => {dispatch(updateFieldChampion(item)); console.log(item)},
-      collect: (monitor) => ({
+      drop: item => {
+        const r = {};
+        r[props.id] = {
+          championId:item.id, 
+          pos:props.pos, 
+          level: item.level?item.level:1, 
+          team:'blue'
+        };
+        dispatch(updateFieldChampion(r));},
+      collect: monitor => ({
         isOver: !!monitor.isOver(),
       })
     }))
@@ -46,29 +56,39 @@ const style ={
 };
 export default function Field() {
   const dispatch = useDispatch();
+  const field = useSelector(state => state.field);
+  const champions = useSelector(state => state.champion);
   const cell = {};
-      
-  const getCellRow = (i) => {
+
+  useEffect(async () => {
+    const r = await postField(field)
+    const championsData = r.blue.champions
+    Object.keys(championsData).map(key => {
+      const r = {};
+      const data = championsData[key]
+      r[data["uuid"]]={pos: cell[key], data: data, alive: true};
+      dispatch(createChampions(r));
+    })
+  }, [field]);
+  
+  const getCellRow = i => {
     const isOdd = i%2
     let style = {width:"700px", height:"86.5px"}
     if (isOdd){style = {paddingLeft: "50px", width:"700px", height:"86.5px"}}
-    return <div style={style} key={i}>{[1,2,3,4,5,6,7].map((j) => {
+    return <div style={style} key={i}>{[1,2,3,4,5,6,7].map(j => {
       const index = j+i*7;
       cell[index-1] = {x:j-1, y:i};
-      return (<Cell id={index} key={index}/>);
+      return (<Cell id={index} pos={{x:j-1, y:i}} key={index}/>);
       })}</div>
   }
-  const createChampion = (c, data) => {
-    const r = {};
-    r[data["uuid"]]={pos: cell[c], data: data, alive: true};
-    dispatch(createChampions(r));
-    return <Champion key={data["uuid"]} id={data["uuid"]}/>
+  const createChampion = championData => {
+    const data = championData.data
+    return <Champion key={data.uuid} id={data.uuid}/>
   };
-  
   return(
     <FieldCont>
-      <div style ={style}>{[0,1,2,3,4,5,6,7].map((i) => {return (getCellRow(i));})}</div>
-      {Object.keys(mock_champion_data).map((key) => {return createChampion(key, mock_champion_data[key])})}   
+      <div style ={style}>{[0,1,2,3,4,5,6,7].map(i => {return (getCellRow(i));})}</div>
+      {Object.keys(champions).map(key => {return createChampion(champions[key])})}   
     </FieldCont>
   )
 }
