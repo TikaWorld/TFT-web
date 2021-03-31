@@ -21,7 +21,21 @@ def field():
     for d in field.values():
         c = game.create_champion(team[d['team']], d['championId'], d['level'])
         game.batch_champion(c, [d['pos']['y'], d['pos']['x']])
+    game.init()
     r = json.dumps(game.get_current())
+    return r
+
+@app.route('/field/log', methods=['POST'])
+def battle_log():
+    field = request.get_json()['field']
+    game = Battle()
+    team = {'red': game.create_team('red'), 'blue': game.create_team('blue')}
+    for d in field.values():
+        c = game.create_champion(team[d['team']], d['championId'], d['level'])
+        game.batch_champion(c, [d['pos']['y'], d['pos']['x']])
+    result = game.start()
+    r = json.dumps(result)
+    
     return r
 
 if __name__ == '__main__':

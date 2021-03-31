@@ -13,3 +13,15 @@ export async function postField(field){
   });
   return r
 }
+
+export async function getLog(field){
+  const header = {"Access-Control-Allow-Origin": "*"};
+  let r
+  await axios.post(url+'field/log', {field: field}, {headers: header})
+  .then(function (response) {
+    r = response.data
+  }).catch(function (error) {
+  }).then(function() {
+  });
+  return r
+}

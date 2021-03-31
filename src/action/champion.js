@@ -9,6 +9,7 @@ const MOVE_CANCELED = "MOVE_CANCELED";
 
 export function actionChampion(dispatch, log){
   const id = log.champion.uuid
+  console.log(log)
   switch (log.action) {
     case MOVE: return moveChampion(dispatch, id, log.target_cell);
     case MOVE_CANCELED: return moveChampion(dispatch, id, log.start_cell);
@@ -35,5 +36,6 @@ function defaultAction(dispatch, id, championData){
   const r = {};
   r.data = championData;
   r.id = id
+  console.log(r)
   dispatch(updateChampionData(r));
 }

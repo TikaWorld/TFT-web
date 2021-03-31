@@ -5,14 +5,15 @@ const UPDATE_DATA = 'champions/UPDATE/DATA';
 const UPDATE_ALIVE = 'champions/UPDATE/ALIVE';
 const REMOVE = 'champions/REMOVE';
 
-const initialState = {};
+var initialState = {};
 
 export default function reducer(state = initialState, action = {}) {
   const champion = action.champion
-  
   switch (action.type) {
     // do reducer stuff
-    case CREATE: return { ...state, ...action.champion };
+    case CREATE: 
+      initialState = { ...action.champion }
+      return { ...action.champion };
     case UPDATE_DATA: 
       state[champion.id].data = champion.data;
       return { ...state };
@@ -24,6 +25,7 @@ export default function reducer(state = initialState, action = {}) {
       return { ...state };
     default: return state;
   }
+
 }
 
 export function loadChampions() {

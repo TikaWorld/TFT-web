@@ -1,6 +1,3 @@
-import mockData from 'MOCK_DATA'
-
-
 const LOAD   = 'timeline/LOAD';
 const CREATE = 'timeline/CREATE';
 const UPDATE = 'timeline/UPDATE';

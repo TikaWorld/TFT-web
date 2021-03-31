@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components'
 import Champion from 'container/champion.js'
 import { createChampions } from 'redux/modules/champion';
 import { updateFieldChampion } from 'redux/modules/field';
+import { updateTimeline } from 'redux/modules/timeline';
 import { useDispatch, useSelector } from 'react-redux';
-import { postField } from 'api/field'
-import mockData from 'MOCK_DATA'
+import { getLog, postField } from 'api/field'
 import Hexagon from 'react-hexagon'
 import { useDrop } from 'react-dnd'
 import { ItemTypes } from 'itemType'
@@ -60,17 +60,20 @@ export default function Field() {
   const cell = {};
 
   useEffect(async () => {
-    const r = await postField(field)
-    const dispatchResult = championsData =>{
+    const log = await getLog(field)
+    let result = {}
+    const ConvertResult = championsData =>{
+      const result = {}
       Object.keys(championsData).map(key => {
-      const r = {};
-      const data = championsData[key]
-      r[data["uuid"]]={pos: cell[key], data: data, alive: true};
-      dispatch(createChampions(r));
-    })}
-    dispatchResult(r.blue.champions)
-    dispatchResult(r.red.champions)
-    
+        const data = championsData[key]
+        result[data["uuid"]]={pos: cell[key], data: data, alive: true};
+      })
+      return result;
+    }
+    result = {...result, ...ConvertResult(log.field.blue.champions)}
+    result = {...result, ...ConvertResult(log.field.red.champions)}
+    dispatch(createChampions(result))
+    dispatch(updateTimeline(log.log))
   }, [field]);
   
   const getCellRow = i => {
