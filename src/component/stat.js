@@ -5,22 +5,19 @@ import Hexagon from 'react-hexagon'
 
 const BarContainer = styled.div` 
   position: absolute;
-  bottom: 32.5px;
-`
-const Bar = styled.div` 
-  width: 100px;
-  height: 8px;
-  background: white;
-  font-size: 7px;
-`
-const Hp = styled(Bar)` 
-  background: red;
-`
-const Mp = styled(Bar)` 
-  background: blue;
+  width: 88.5px;
+  bottom: 7.5px;
+  left: 6px;
 `
 const HexCont = styled.div`
+  overflow: hidden;
   position: relative;
+`
+const Hp = styled(HexCont)`
+  clip-path: inset(0% 50% 0% 0%);
+`
+const Mp = styled(HexCont)` 
+  clip-path: inset(0% 0% 0% 50%);
 `
 
 
@@ -34,13 +31,40 @@ export default function Stat(props) {
         <Hexagon 
         style={{
           stroke: level[data.level], 
-          strokeWidth:30
-          }} 
-        backgroundImage={"/champions/"+data.id+".png"}/>
+          strokeWidth:30,
+          }}/>
       </HexCont>
       <BarContainer>
-        <Bar><Hp style={{width: (data.hp/stat.max_hp*100).toString()+"%"}}>{data.hp}</Hp></Bar>
-        <Bar><Mp style={{width: (data.mp/stat.max_mp*100).toString()+"%"}}>{data.mp}</Mp></Bar> 
+        <HexCont>
+          <Hexagon 
+          style={{
+            stroke: 'white', 
+            strokeWidth:30,
+            }} 
+          backgroundImage={"/champions/"+data.id+".png"}/>
+        </HexCont>
+      </BarContainer>
+      <BarContainer>
+        <Hp>
+          <Hexagon 
+          style={{
+            stroke: 'red', 
+            strokeWidth:30,
+            strokeDashoffset: 750/(750/((data.hp/stat.max_hp)*750))+750,
+            strokeDasharray: 750
+            }}/>
+        </Hp>
+      </BarContainer>
+      <BarContainer>
+        <Mp>
+          <Hexagon 
+          style={{
+            stroke: data.mp?'blue':'unset', 
+            strokeWidth:30,
+            strokeDashoffset: 750/(750/-((data.mp/stat.max_mp)*750)),
+            strokeDasharray: 750
+            }}/>
+        </Mp>
       </BarContainer>
     </div>
   )

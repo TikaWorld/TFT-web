@@ -22,6 +22,7 @@ const FieldCont = styled.div`
 
 function Cell(props) {
   const item = props.item
+  const position = props.pos.y<4?'red':'blue'
   const dispatch = useDispatch();
   const [, drop] = useDrop(
     () => ({
@@ -32,7 +33,7 @@ function Cell(props) {
           championId:item.id, 
           pos:props.pos, 
           level: item.level?item.level:1, 
-          team:'blue'
+          team: position
         };
         dispatch(updateFieldChampion(r));},
       collect: monitor => ({
@@ -47,8 +48,6 @@ function Cell(props) {
 }  
 
 
-const mock_champion_data = {};
-
 const style ={
   position: 'absolute',
   width:"700px",
@@ -62,13 +61,16 @@ export default function Field() {
 
   useEffect(async () => {
     const r = await postField(field)
-    const championsData = r.blue.champions
-    Object.keys(championsData).map(key => {
+    const dispatchResult = championsData =>{
+      Object.keys(championsData).map(key => {
       const r = {};
       const data = championsData[key]
       r[data["uuid"]]={pos: cell[key], data: data, alive: true};
       dispatch(createChampions(r));
-    })
+    })}
+    dispatchResult(r.blue.champions)
+    dispatchResult(r.red.champions)
+    
   }, [field]);
   
   const getCellRow = i => {
